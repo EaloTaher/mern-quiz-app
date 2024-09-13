@@ -1,9 +1,38 @@
 import { Link } from "react-router-dom";
-import ResultTable from "./ResultTable";
+import { useDispatch, useSelector } from "react-redux";
+import { resetAllAction } from "../redux/features/questionsSlice";
+import { resetResultAction } from "../redux/features/resultsSlice";
+import {
+  attemps_Number,
+  earnedPoints_Number,
+  flagResult,
+} from "../helper/helper";
+import { useEffect } from "react";
 export default function Result() {
+  const {
+    questions: { queue, answers },
+    result: { result, userId },
+  } = useSelector((state) => state);
+
+  const dispatch = useDispatch();
+
   function onRestart() {
-    console.log("Restart");
+    dispatch(resetAllAction());
+    dispatch(resetResultAction());
   }
+
+  const totalPoints = queue.length * 10;
+  const attemps = attemps_Number(result);
+  const earnedPoints = earnedPoints_Number(result, answers, 10);
+  const flag = flagResult(totalPoints, earnedPoints);
+
+  useEffect(() => {
+    console.log(totalPoints);
+    console.log(attemps);
+    console.log(earnedPoints);
+    console.log(flag);
+  });
+
   return (
     <>
       <div className="bottom-3 ">
@@ -11,19 +40,29 @@ export default function Result() {
           <span>Username</span> <span className="bold">Ealam Taher</span>
         </div>
         <div className="flex justify-between">
-          <span>Total Quiz Points:</span> <span className="bold">50</span>
+          <span>Total Quiz Points:</span>{" "}
+          <span className="bold">{totalPoints || 0}</span>
         </div>
         <div className="flex justify-between">
-          <span>Total Questions: </span> <span className="bold">05</span>
+          <span>Total Questions: </span>{" "}
+          <span className="bold">{queue.length || 0}</span>
         </div>
         <div className="flex justify-between">
-          <span>Total Attemps: </span> <span className="bold">03</span>
+          <span>Total Attemps: </span>{" "}
+          <span className="bold">{attemps || 0}</span>
         </div>
         <div className="flex justify-between">
-          <span>Total Earn Points: </span> <span className="bold">30</span>
+          <span>Total Earn Points: </span>{" "}
+          <span className="bold">{earnedPoints || 0}</span>
         </div>
         <div className="flex justify-between">
-          <span>Quiz Result: </span> <span className="bold">Passed</span>
+          <span>Quiz Result: </span>{" "}
+          <span
+            className="bold"
+            style={{ color: `${flag ? "#2aff95" : "#ff2a66"}` }}
+          >
+            {flag ? "Passed" : "Failed"}
+          </span>
         </div>
       </div>
       <div className="flex justify-center mt-4">
@@ -47,7 +86,7 @@ export default function Result() {
             <td className="px-4 py-3">Jill</td>
             <td className="px-4 py-3">03</td>
             <td className="px-4 py-3">20</td>
-            <td className="px-4 py-3">Passed</td>
+            <td className="px-4 py-3"></td>
           </tr>
         </table>
       </div>

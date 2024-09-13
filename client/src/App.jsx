@@ -1,22 +1,30 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-
 //import components
 import Home from "./components/Home";
 import Quiz from "./components/Quiz";
 import Result from "./components/Result";
+import { CheckUserExist } from "./components/CheckUserExist";
 // React Routers
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Home></Home>,
+    element: <Home />,
   },
   {
     path: "/quiz",
-    element: <Quiz></Quiz>,
+    element: (
+      <CheckUserExist>
+        <Quiz></Quiz>
+      </CheckUserExist>
+    ),
   },
   {
     path: "/result",
-    element: <Result></Result>,
+    element: (
+      <CheckUserExist>
+        <Result></Result>
+      </CheckUserExist>
+    ),
   },
 ]);
 
