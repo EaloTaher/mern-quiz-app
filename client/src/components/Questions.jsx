@@ -33,28 +33,30 @@ export default function Questions({ onChecked, selectedAnswer }) {
   return (
     <div>
       <h2 className=" text-lg mb-5">{questions?.question}</h2>
-      <div className=" pl-2">
-        {questions?.options.map((q, i) => (
-          <div key={i} className="flex items-center mr-4 mb-4">
-            <input
-              type="radio"
-              name="options"
-              className="hidden"
-              id={`q${i}-options`}
-              onChange={() => {
-                onSelect(i);
-              }}
-              checked={checked === i}
-            />
-            <label
-              htmlFor={`q${i}-options`}
-              className="flex items-center cursor-pointer text-xl"
-            >
-              <span className="w-8 h-8 inline-block mr-2 rounded-full border border-grey flex-no-shrink "></span>
-              {q}
-            </label>
-          </div>
-        ))}
+      <div className=" flex flex-col items-center">
+        <div className=" pl-2">
+          {questions?.options.map((q, i) => (
+            <div key={i} className="flex items-center mr-4 mb-4">
+              <input
+                type="radio"
+                name="options"
+                className="hidden"
+                id={`q${i}-options`}
+                onChange={() => {
+                  onSelect(i);
+                }}
+                checked={checked === i}
+              />
+              <label
+                htmlFor={`q${i}-options`}
+                className="flex items-center cursor-pointer text-xl"
+              >
+                <span className="w-8 h-8 inline-block mr-2 rounded-full border border-grey flex-no-shrink "></span>
+                {q}
+              </label>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
