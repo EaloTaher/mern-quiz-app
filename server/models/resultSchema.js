@@ -10,4 +10,4 @@ const resultModel = new Schema({
   createdAt: { type: Date, default: Date.now },
 });
 
-export default mongoose.Model("Result", resultModel);
+export default mongoose.model("Result", resultModel);
