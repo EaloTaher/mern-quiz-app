@@ -1,4 +1,3 @@
-import { data } from "autoprefixer";
 import { postServerData } from "../helper/helper";
 import * as Action from "../redux/features/resultsSlice";
 
@@ -21,7 +20,6 @@ export const updateResult = (index) => async (dispatch) => {
 // insert user data
 
 export const usePublishResult = (resultData) => {
-  console.log("test");
   const { result, username } = resultData;
   (async () => {
     try {

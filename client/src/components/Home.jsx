@@ -21,7 +21,7 @@ export default function Home() {
   return (
     <div className="flex justify-center flex-col ">
       <ol>
-        <li>1. You will be asked 10 questions one after another. </li>
+        <li>1. You will be asked 5 questions one after another. </li>
         <li>2. 10 points is awarded for the correct answer.</li>
         <li>
           3. Each question has three options. You can choose only one option.

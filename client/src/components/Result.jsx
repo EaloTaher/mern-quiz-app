@@ -7,14 +7,11 @@ import {
   earnedPoints_Number,
   flagResult,
 } from "../helper/helper";
-import { useEffect } from "react";
 import { usePublishResult } from "../hooks/setResults";
 import ResultTable from "./ResultTable";
 export default function Result() {
-  const {
-    questions: { queue, answers },
-    result: { result, userId },
-  } = useSelector((state) => state);
+  const { queue, answers } = useSelector((state) => state.questions);
+  const { result, userId } = useSelector((state) => state.result);
 
   const dispatch = useDispatch();
 

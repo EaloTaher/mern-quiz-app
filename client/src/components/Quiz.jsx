@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import Questions from "./Questions";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { moveNextQuestion, movePrevQuestion } from "../hooks/fetchQuestions";
 import { pushAnswerAction } from "../redux/features/resultsSlice";
 import { Navigate } from "react-router-dom";
