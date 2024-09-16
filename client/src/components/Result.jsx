@@ -3,11 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { resetAllAction } from "../redux/features/questionsSlice";
 import { resetResultAction } from "../redux/features/resultsSlice";
 import {
-  attemps_Number,
+  attempts_Number,
   earnedPoints_Number,
   flagResult,
 } from "../helper/helper";
 import { useEffect } from "react";
+import { usePublishResult } from "../hooks/setResults";
+import ResultTable from "./ResultTable";
 export default function Result() {
   const {
     questions: { queue, answers },
@@ -22,22 +24,23 @@ export default function Result() {
   }
 
   const totalPoints = queue.length * 10;
-  const attemps = attemps_Number(result);
+  const attempts = attempts_Number(result);
   const earnedPoints = earnedPoints_Number(result, answers, 10);
   const flag = flagResult(totalPoints, earnedPoints);
-
-  useEffect(() => {
-    console.log(totalPoints);
-    console.log(attemps);
-    console.log(earnedPoints);
-    console.log(flag);
+  // store user result
+  usePublishResult({
+    result,
+    username: userId,
+    attempts,
+    points: earnedPoints,
+    achieved: flag ? "Passed" : "Failed",
   });
 
   return (
     <>
       <div className="bottom-3 ">
         <div className="flex justify-between">
-          <span>Username</span> <span className="bold">Ealam Taher</span>
+          <span>Username</span> <span className="bold">{userId}</span>
         </div>
         <div className="flex justify-between">
           <span>Total Quiz Points:</span>{" "}
@@ -48,8 +51,8 @@ export default function Result() {
           <span className="bold">{queue.length || 0}</span>
         </div>
         <div className="flex justify-between">
-          <span>Total Attemps: </span>{" "}
-          <span className="bold">{attemps || 0}</span>
+          <span>Total Attempts: </span>{" "}
+          <span className="bold">{attempts || 0}</span>
         </div>
         <div className="flex justify-between">
           <span>Total Earn Points: </span>{" "}
@@ -74,22 +77,7 @@ export default function Result() {
           Restart
         </Link>
       </div>
-      <div>
-        <table className="rounded-t-lg m-5 w-5/6 mx-auto bg-gray-800 text-gray-200">
-          <tr className="text-left border-b border-gray-300">
-            <th className="px-4 py-3">Name</th>
-            <th className="px-4 py-3">Attemps</th>
-            <th className="px-4 py-3">Earn Points</th>
-            <th className="px-4 py-3">Result</th>
-          </tr>
-          <tr className="bg-gray-700 border-b border-gray-600">
-            <td className="px-4 py-3">Jill</td>
-            <td className="px-4 py-3">03</td>
-            <td className="px-4 py-3">20</td>
-            <td className="px-4 py-3"></td>
-          </tr>
-        </table>
-      </div>
+      <ResultTable />
     </>
   );
 }

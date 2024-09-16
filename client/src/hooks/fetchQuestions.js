@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import data, { answers } from "../database/data";
 import { useDispatch } from "react-redux";
 // reduc action
 import * as Action from "../redux/features/questionsSlice";
+import { getServerData } from "../helper/helper";
 // fetch questions hook to fetch api and set value to the store
 export const useFetchQuestion = () => {
   const dispatch = useDispatch();
@@ -20,7 +20,11 @@ export const useFetchQuestion = () => {
     // async function fetch backend data
     (async () => {
       try {
-        let questions = await data;
+        const [{ questions, answers }] = await getServerData(
+          `${import.meta.env.VITE_SERVER_HOSTNAME}/api/questions`,
+          (data) => data
+        );
+
         if (questions.length > 0) {
           setGetData((prev) => ({
             ...prev,

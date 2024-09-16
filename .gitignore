@@ -4,3 +4,4 @@ server/.env
 .env.development
 .env.test.local
 e.env.production.local
+.env
